@@ -2,4 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def home(request):
-    return render(request, 'minha_lista/home.html')
+    if request.method == 'POST':
+        task = request.POST.get('task')
+        print(task)
+    return render(request, 'app_to_do/home.html')
