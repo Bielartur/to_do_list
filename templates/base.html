@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gerenciador de tarefas</title>
+    <title>{% block title %}{% endblock title %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,27 +18,14 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static 'app_to_do/styles.css' %}"
+      href="{% static 'css/styles.css' %}"
     />
   </head>
   <body>
     <div class="wrapper">
-      <div class="main-container">
-        <h1>Gerenciador de tarefas</h1>
-        <div class="down-div">
-          <div class="input-task">
-            <label for="">O que você precisa fazer?</label>
-            <input id="main-input" name="task" type="text" placeholder="Comprar pão" />
-          </div>
-          <div class="button-div">
-            <button id="add-task">
-              <i class="fas fa-plus"></i> Adicionar tarefa
-            </button>
-          </div>
-        </div>
-        <div class="tasks"></div>
-      </div>
+        {% block content %} 
+        {% endblock content %}
     </div>
   </body>
-  <!-- <script src="{% static 'app_to_do/script.js' %}"></script> -->
+  <script src="{% static 'js/script.js' %}"></script>
 </html>

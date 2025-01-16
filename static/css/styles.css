@@ -1,0 +1,109 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+    line-height: 1.35;
+}
+
+body {
+    background-color: #232323;
+    color: #DCDCDC;
+}
+
+.wrapper {
+    width: calc(100% - 2rem);
+    height: calc(100vh - 2rem);
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    gap: 2rem;
+    padding-top: 2rem;
+}
+
+.input-task{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.main-input {
+    border-radius: 4px;
+    padding: 0.3rem;
+    border: none;
+    background-color: #191919;
+    color: #DCDCDC;
+}
+
+#add-task {
+    margin-top: 0.5rem;
+    padding: 0.4rem ;
+    width: 132px;
+    border-radius: 8px;
+    border: none;
+}
+
+.button-div {
+    display: flex;
+    justify-content: right;
+}
+
+.login-container {
+    padding-top: 0;
+    justify-content: center;
+    max-width: 400px;
+    gap: 1.2rem;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.input-login {
+    border: none;
+    padding: 0.5rem;
+}
+
+#remember-me {
+    width: 24px;
+}
+
+#remember-me-label {
+    display: flex;
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+button.send-login {
+    border-radius: 8px;
+    border: 1px solid #DCDCDC;
+    padding: 0.35rem;
+    background-color: transparent;
+    color: #DCDCDC;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+button.send-login:hover {
+    border: 1px solid #191919;
+    background-color: #DCDCDC;
+    color: #232323;
+    transition: all ease .3s;
+}
+
+.cadastrar-usuario {
+    font-size: 0.9rem;
+}
+
+.cadastrar-usuario a {
+    color: #DCDCDC;
+    font-weight: 550;
+}

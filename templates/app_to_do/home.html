@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Gerenciador de tarefas{% endblock title %}
+{% block content %}
+<div class="main-container">
+  <h1>Gerenciador de tarefas</h1>
+  <form method="post" action="{% url 'home' %}">
+    {% csrf_token %}
+    <div class="down-div">
+      <div class="input-task">
+        <label for="">O que você precisa fazer?</label>
+        <input
+          class="main-input"
+          name="task"
+          type="text"
+          placeholder="Comprar pão"
+        />
+      </div>
+      <div class="button-div">
+        <button id="add-task" type="submit">
+          <i class="fas fa-plus"></i> Adicionar tarefa
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="tasks"></div>
+</div>
+{% endblock content %}
