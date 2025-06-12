@@ -1,36 +1,32 @@
-{% extends 'base.html' %} 
-{% block title %} 
-Cadastre-se 
-{% endblock title %} 
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Cadastre-se
+{% endblock title %}
 
 {% block content %}
-<div class="main-container login-container">
-  <h1>Cadastre-se!</h1>
-  <p>Cadastre-se e rapidamente otimize seu tempo e suas ideias.</p>
-  <form action="{% url 'contas:criar_conta' %}" method="post">
-    {% csrf_token %}
-    <div class="login">
-      <input
-        type="text"
-        name="email"
-        class="main-input input-login"
-        placeholder="E-mail"
-      />
-      <input
-        type="text"
-        name="password"
-        class="main-input input-login"
-        placeholder="Senha"
-      />
-      <input
-        type="text"
-        name="password"
-        class="main-input input-login"
-        placeholder="Confirmar senha"
-      />
-      
-      <button class='send-login'>Cadastrar</button>
+    <div class="h-screen flex items-center justify-center">
+        <div class="flex flex-col text-gray-900 font-[400] gap-2 bg-gray-100 pt-8 px-12 pb-5 rounded-2xl items-center w-100 max-w-full min-h-64">
+            <h1 class="text-3xl font-semibold">Cadastre-se!</h1>
+            <form method="post" class="w-full">
+                {% csrf_token %}
+                <fieldset class="flex flex-col gap-4 text-center">
+                    <legend class="text-14 leading-5 text-center mb-4">Cadastre-se e rapidamente otimize seu tempo e
+                        suas ideias.
+                    </legend>
+                    {% for campo in form %}
+                        {% render_field campo class="p-2 rounded-lg border-1 border-gray-400 bg-white" placeholder=campo.label %}
+                    {% endfor %}
+                </fieldset>
+                <button type="submit" class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold mb-2">Cadastrar</button>
+                <div class="w-full flex justify-center text-lm gap-1">
+                    <label for="cadastrar-usuario">Já tem uma conta?</label>
+                    <a href="{% url 'contas:login' %}" id="cadastrar-usuario" class="text-blue-700 hover:text-blue-500 transition duration-300">
+                        Faça login
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-  </form>
-</div>
 {% endblock content %}
