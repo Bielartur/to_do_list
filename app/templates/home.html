@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Gerenciador de tarefas{% endblock title %}
+
+{% block title %}
+    Gerenciador de tarefas
+{% endblock title %}
+
 {% block content %}
 <div class="main-container">
   <h1>Gerenciador de tarefas</h1>
-  <form method="post" action="{% url 'home' %}">
+  <form method="post" action="{% url 'app:home' %}">
     {% csrf_token %}
     <div class="down-div">
       <div class="input-task">

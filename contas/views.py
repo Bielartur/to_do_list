@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import reverse
+from django.views.generic import FormView
 
-def login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(username)
-        print(password)
-    return render(request, 'contas/login.html')
 
-def cadastro_usuario(request):
-    return render(request, 'contas/cadastro_usuario.html')
+class CriarConta(FormView):
+    template_name = 'criar_conta.html'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('contas:login')
