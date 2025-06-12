@@ -1,9 +1,12 @@
 from django.shortcuts import reverse
 from django.views.generic import FormView
 
+from contas.forms import CriarContaForm
+
 
 class CriarConta(FormView):
     template_name = 'criar_conta.html'
+    form_class = CriarContaForm
 
     def form_valid(self, form):
         form.save()
