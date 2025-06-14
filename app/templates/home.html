@@ -25,17 +25,26 @@
                     </button>
                 </div>
             </form>
+            <h2>Feito</h2>
             <ul class="flex flex-col gap-2 mt-2 overflow-y-scroll h-4/5">
                 {% for t in tasks %}
                     <li class="p-3 bg-blue-200 rounded-sm">
                         <form action="{% url 'app:home' %}" method="post" class="flex justify-between items-center">
                             {% csrf_token %}
-                            <span>{{ t.title }}</span>
+                            <button
+                                    type="submit"
+                                    name="task-done"
+                                    value="{{ t.id }},{{ t.done }}"
+                                    class="w-full flex align-start gap-2"
+                            >
+                                <input type="checkbox" {% if t.done %}checked{% endif %}>
+                                <span class="{% if t.done %}line-through{% endif %} cursor-pointer text-start">{{ t.title }}</span>
+                            </button>
                             <button
                                     type="submit"
                                     name="task-delete"
                                     value='{{ t.id }}'
-                                    class="fa-solid fa-trash-can cursor-pointer"
+                                    class="fa-solid fa-trash-can cursor-pointer ml-2"
                             ></button>
                         </form>
                     </li>

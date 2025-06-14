@@ -13,7 +13,7 @@ class Home(LoginRequiredMixin, FormView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        tasks = ToDoList.objects.all()
+        tasks = ToDoList.objects.filter(user_id=request.user.id).all()
         return render(request, self.template_name, {'form': form,'tasks': tasks})
 
     def post(self, request, *args, **kwargs):
@@ -25,6 +25,13 @@ class Home(LoginRequiredMixin, FormView):
         if request.POST.get('task-delete'):
             id = int(request.POST.get('task-delete'))
             ToDoList.objects.get(id=id).delete()
+
+        if request.POST.get('task-done'):
+            id, done = request.POST.get('task-done').split(',')
+            task = ToDoList.objects.get(id=int(id))
+            is_done = done.lower() == 'true'
+            task.done = not is_done
+            task.save()
 
         return redirect(self.get_success_url())
 
