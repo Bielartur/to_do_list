@@ -1,14 +1,14 @@
-* {
-    font-family: 'Roboto', sans-serif;
-    padding: 0;
-    margin: 0;
-    line-height: 1.35;
-}
+/** {*/
+/*    font-family: 'Roboto', sans-serif;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    line-height: 1.35;*/
+/*}*/
 
-body {
-    background-color: #232323;
-    color: #DCDCDC;
-}
+/*body {*/
+/*    background-color: #232323;*/
+/*    color: #DCDCDC;*/
+/*}*/
 
 .wrapper {
     width: calc(100% - 2rem);

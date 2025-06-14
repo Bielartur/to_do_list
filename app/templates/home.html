@@ -1,31 +1,46 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
     Gerenciador de tarefas
 {% endblock title %}
 
 {% block content %}
-<div class="main-container">
-  <h1>Gerenciador de tarefas</h1>
-  <form method="post" action="{% url 'app:home' %}">
-    {% csrf_token %}
-    <div class="down-div">
-      <div class="input-task">
-        <label for="">O que você precisa fazer?</label>
-        <input
-          class="main-input"
-          name="task"
-          type="text"
-          placeholder="Comprar pão"
-        />
-      </div>
-      <div class="button-div">
-        <button id="add-task" type="submit">
-          <i class="fas fa-plus"></i> Adicionar tarefa
-        </button>
-      </div>
-    </div>
-  </form>
-  <div class="tasks"></div>
-</div>
+    <section class="h-screen flex justify-center py-6">
+        <div class="bg-gray-100 py-5 px-8 text-gray-900 rounded-2xl max-w-full min-h-64">
+            <div class="flex items-center gap-4">
+                <h1 class="text-3xl">Gerenciador de tarefas</h1>
+                <a href="{#{% url 'app:editar_perfil' %}#}" class="fa fa-cog max-h-fit"></a>
+            </div>
+            <form method="post" action="{% url 'app:home' %}" class="flex flex-col gap-2">
+                {% csrf_token %}
+                <fieldset class="flex justify-left mt-4">
+                    {% for campo in form %}
+                        {% render_field campo class="p-1 rounded-lg border-1 border-gray-400 bg-white w-full" placeholder="O que você precisa fazer?" %}
+                    {% endfor %}
+                </fieldset>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-yellow-400 py-1 px-2 rounded-xl cursor-pointer w-40">
+                        <i class="fas fa-plus"></i> Adicionar tarefa
+                    </button>
+                </div>
+            </form>
+            <ul class="flex flex-col gap-2 mt-2 overflow-y-scroll h-4/5">
+                {% for t in tasks %}
+                    <li class="p-3 bg-blue-200 rounded-sm">
+                        <form action="{% url 'app:home' %}" method="post" class="flex justify-between items-center">
+                            {% csrf_token %}
+                            <span>{{ t.title }}</span>
+                            <button
+                                    type="submit"
+                                    name="task-delete"
+                                    value='{{ t.id }}'
+                                    class="fa-solid fa-trash-can cursor-pointer"
+                            ></button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
 {% endblock content %}
