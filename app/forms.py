@@ -1,4 +1,4 @@
 from django import forms
 
-class ToDoForm(forms.Form):
+class ToDoListForm(forms.Form):
     task = forms.CharField(label='')
