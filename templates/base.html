@@ -10,6 +10,8 @@
             rel="stylesheet"
     />
     {% load static %}
+    {% block head %}
+    {% endblock %}
 </head>
 <body style="background-image: url('{% static 'img/background.jpg' %}')">
     {% block content %}

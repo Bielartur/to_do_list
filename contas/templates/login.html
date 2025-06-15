@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_contas.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -6,41 +6,37 @@
     Fazer login
 {% endblock title %}
 
-{% block content %}
-    <section class="h-screen flex items-center justify-center">
-        <div class="flex flex-col text-gray-900 font-[400] gap-2 bg-gray-100 pt-8 px-12 pb-5 rounded-2xl items-center w-100 max-w-full min-h-64">
-            <img src="{% static 'img/logo-python.png' %}" alt="Logo do Python" class="w-1/6">
-            <h1 class="text-3xl mb-2 font-semibold">Seja bem vindo!</h1>
-            <p class="text-14 leading-5 text-center">Organize suas atividades diárias de forma simples e sem
-                preucupações.</p>
-            <form action="{% url 'contas:login' %}" method="post" class="w-full">
-                {% csrf_token %}
-                <fieldset class="flex flex-col gap-4 text-center">
-                    <legend class="mb-2 font-semibold">Faça antes seu login para começar</legend>
-                    {% for campo in form %}
-                        {% render_field campo class="p-2 rounded-lg border-1 border-gray-400 bg-white" placeholder=campo.label %}
-                        {% for erro in campo.errors %}
-                                <p class="text-red-600 text-sm mb-2">{{ erro }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                </fieldset>
-                <button type="submit" class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold">Entrar</button>
-            </form>
-            <div class="w-full">
-                <div class="w-full flex justify-between text-lm">
-                    <label for="cadastrar-usuario">Ainda não tem uma conta?</label>
-                    <a href="{% url 'contas:criar_conta' %}" id="cadastrar-usuario"
-                       class="text-blue-700 hover:text-blue-500 transition duration-300">
-                        Cadastre-se
-                        <i class="fas fa-angle-right"></i>
-                    </a>
-                </div>
-                <div class="flex justify-center gap-3 mt-4">
-                    <img src="{% static 'img/logo-google.png' %}" alt="Logo do Google" class="w-12">
-                    <img src="{% static 'img/logo-github.png' %}" alt="Logo do Github" class="w-12">
-                </div>
-                <!-- <a href="">Esqueceu senha?</a> -->
-            </div>
+{% block content_contas %}
+    <img src="{% static 'img/logo-python.png' %}" alt="Logo do Python" class="w-1/6">
+    <h1 class="text-3xl mb-2 font-semibold">Seja bem vindo!</h1>
+    <p class="text-14 leading-5 text-center">Organize suas atividades diárias de forma simples e sem
+        preucupações.</p>
+    <form action="{% url 'contas:login' %}" method="post" class="w-full">
+        {% csrf_token %}
+        <fieldset class="flex flex-col gap-4 text-center">
+            <legend class="mb-2 font-semibold">Faça antes seu login para começar</legend>
+            {% for campo in form %}
+                {% render_field campo class="p-2 rounded-lg border-1 border-gray-400 bg-white" placeholder=campo.label %}
+                {% for erro in campo.errors %}
+                    <p class="text-red-600 text-sm mb-2">{{ erro }}</p>
+                {% endfor %}
+            {% endfor %}
+        </fieldset>
+        <button type="submit" class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold shadow-lg hover:shadow-indigo-500/50 trasition duration-400">Entrar</button>
+    </form>
+    <div class="w-full">
+        <div class="w-full flex justify-between text-lm">
+            <label for="cadastrar-usuario">Ainda não tem uma conta?</label>
+            <a href="{% url 'contas:criar_conta' %}" id="cadastrar-usuario"
+               class="text-blue-700 hover:text-blue-500 transition duration-300">
+                Cadastre-se
+                <i class="fas fa-angle-right"></i>
+            </a>
         </div>
-    </section>
-{% endblock content %}
+        <div class="flex justify-center gap-3 mt-4">
+            <img src="{% static 'img/logo-google.png' %}" alt="Logo do Google" class="w-12">
+            <img src="{% static 'img/logo-github.png' %}" alt="Logo do Github" class="w-12">
+        </div>
+        <!-- <a href="">Esqueceu senha?</a> -->
+    </div>
+{% endblock %}
