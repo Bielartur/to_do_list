@@ -1,0 +1,33 @@
+{% extends 'base_home.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Editar Perfil
+{% endblock %}
+
+{% block content_home %}
+    <div class="flex items-center justify-between">
+        <h1 class="text-3xl mb-1">Redefinir senha</h1>
+        <a href="{% url 'contas:editar_perfil' usuario.pk %}"
+           class="fa-solid fa-arrow-left text-base cursor-pointer bg-gray-900 text-gray-200 p-2 rounded-full"></a>
+    </div>
+    <form method="post" class="w-full">
+        {% csrf_token %}
+        <fieldset class="flex flex-col gap-3 text-center">
+            <legend class="text-14 text-left leading-5 text-center mb-4">Atualize sua senha sem dificuldades
+            </legend>
+            {% for campo in form %}
+                {% if campo.label != 'Senha' %}
+                    <div class="flex flex-col">
+                        <label class="text-left">{{ campo.label }}</label>
+                        {% render_field campo class="p-2 rounded-lg border-1 border-gray-400 bg-white" %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </fieldset>
+        <button type="submit"
+                class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold mb-2 cursor-pointer shadow-lg hover:scale-101 hover:shadow-indigo-500/50 trasition duration-400">
+            <i class="fas fa-save mr-2"></i>Salvar alterações
+        </button>
+    </form>
+{% endblock %}

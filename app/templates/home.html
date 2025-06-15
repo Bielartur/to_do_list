@@ -1,55 +1,60 @@
-{% extends 'base.html' %}
+{% extends 'base_home.html' %}
 {% load widget_tweaks %}
 
 {% block title %}
     Gerenciador de tarefas
 {% endblock title %}
 
-{% block content %}
-    <section class="h-screen flex justify-center py-6">
-        <div class="bg-gray-100 py-5 px-8 text-gray-900 rounded-2xl max-w-full min-h-64">
-            <div class="flex items-center gap-4">
-                <h1 class="text-3xl">Gerenciador de tarefas</h1>
-                <a href="{#{% url 'app:editar_perfil' %}#}" class="fa fa-cog max-h-fit"></a>
-            </div>
-            <form method="post" action="{% url 'app:home' %}" class="flex flex-col gap-2">
-                {% csrf_token %}
-                <fieldset class="flex justify-left mt-4">
-                    {% for campo in form %}
-                        {% render_field campo class="p-1 rounded-lg border-1 border-gray-400 bg-white w-full" placeholder="O que você precisa fazer?" %}
-                    {% endfor %}
-                </fieldset>
-                <div class="flex justify-end">
-                    <button type="submit" class="bg-yellow-400 py-1 px-2 rounded-xl cursor-pointer w-40">
-                        <i class="fas fa-plus"></i> Adicionar tarefa
-                    </button>
-                </div>
-            </form>
-            <h2>Feito</h2>
-            <ul class="flex flex-col gap-2 mt-2 overflow-y-scroll h-4/5">
-                {% for t in tasks %}
-                    <li class="p-3 bg-blue-200 rounded-sm">
-                        <form action="{% url 'app:home' %}" method="post" class="flex justify-between items-center">
-                            {% csrf_token %}
-                            <button
-                                    type="submit"
-                                    name="task-done"
-                                    value="{{ t.id }},{{ t.done }}"
-                                    class="w-full flex align-start gap-2"
-                            >
-                                <input type="checkbox" {% if t.done %}checked{% endif %}>
-                                <span class="{% if t.done %}line-through{% endif %} cursor-pointer text-start">{{ t.title }}</span>
-                            </button>
-                            <button
-                                    type="submit"
-                                    name="task-delete"
-                                    value='{{ t.id }}'
-                                    class="fa-solid fa-trash-can cursor-pointer ml-2"
-                            ></button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
+{% block head %}
+    <style>
+        .height-ul {
+            flex: 1;
+            overflow-y: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block content_home %}
+    <div class="flex items-center gap-4">
+        <h1 class="text-3xl">Gerenciador de tarefas</h1>
+        <a href="{% url 'contas:editar_perfil' usuario.pk %}" class="fa fa-cog max-h-fit text-xl"></a>
+    </div>
+    <form method="post" action="{% url 'app:home' %}" class="flex flex-col gap-2">
+        {% csrf_token %}
+        <fieldset class="flex justify-left mt-4">
+            {% for campo in form %}
+                {% render_field campo class="p-1 rounded-lg border-1 border-gray-400 bg-white w-full" placeholder="O que você precisa fazer?" %}
+            {% endfor %}
+        </fieldset>
+        <div class="flex justify-end">
+            <button type="submit" class="bg-yellow-400 py-1 px-2 rounded-xl cursor-pointer w-40">
+                <i class="fas fa-plus"></i> Adicionar tarefa
+            </button>
         </div>
-    </section>
-{% endblock content %}
+    </form>
+    <h2>Feito</h2>
+    <ul class="flex flex-1 flex-col space-y-2 mt-2 overflow-y-auto">
+        {% for t in tasks %}
+            <li class="p-3 bg-blue-200 rounded-md {% if t.done %}bg-blue-200 text-gray-600{% endif %}">
+                <form action="{% url 'app:home' %}" method="post" class="flex justify-between items-center">
+                    {% csrf_token %}
+                    <button
+                            type="submit"
+                            name="task-done"
+                            value="{{ t.id }},{{ t.done }}"
+                            class="w-full flex align-start gap-2"
+                    >
+                        <input type="checkbox" {% if t.done %}checked{% endif %}>
+                        <span class="{% if t.done %}line-through{% endif %} cursor-pointer text-start">{{ t.title }}</span>
+                    </button>
+                    <button
+                            type="submit"
+                            name="task-delete"
+                            value='{{ t.id }}'
+                            class="fa-solid fa-trash-can cursor-pointer ml-2 text-gray-700"
+                    ></button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

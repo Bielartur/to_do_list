@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="h-screen flex items-center justify-center">
+        <div class="flex flex-col text-gray-900 font-[400] gap-2 bg-gray-100 pt-8 px-12 pb-5 rounded-2xl items-center w-100 max-w-full min-h-64 shadow-xl">
+            {% block content_contas %}
+            {% endblock %}
+        </div>
+    </section>
+{% endblock %}
