@@ -6,9 +6,15 @@
 {% endblock title %}
 
 {% block content_home %}
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 w-full justify-between">
         <h1 class="text-3xl">Gerenciador de tarefas</h1>
-        <a href="{% url 'contas:editar_perfil' usuario.pk %}" class="fa fa-cog max-h-fit text-xl"></a>
+        <div class="flex gap-4">
+            <a href="{% url 'contas:editar_perfil' user.pk %}" class="fa fa-cog max-h-fit text-xl"></a>
+            <form action="{% url 'contas:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="fas fa-sign-out max-h-fit text-xl cursor-pointer"></button>
+            </form>
+        </div>
     </div>
     <form method="post" action="{% url 'app:home' %}" class="flex flex-col gap-2">
         {% csrf_token %}
@@ -18,13 +24,33 @@
             {% endfor %}
         </fieldset>
         <div class="flex justify-end">
-            <button type="submit" class="bg-yellow-400 py-1 px-2 rounded-xl cursor-pointer w-40">
+            <button type="submit"
+                    class="bg-yellow-400 py-1 px-2 rounded-xl w-40 cursor-pointer shadow-lg hover:scale-101 hover:shadow-indigo-500/50 trasition duration-400">
                 <i class="fas fa-plus"></i> Adicionar tarefa
             </button>
         </div>
     </form>
-    <h2>Feito</h2>
+    <div class="flex items-center justify-between mt-3">
+        <h2>Concluidas: {{ concluidas }}/{{ total }}</h2>
+        <form action="{% url 'app:home' %}" method="get">
+            <i class="fa-solid fa-filter"></i>
+            <select name="filtro" onchange="this.form.submit()">
+                <option value="" {% if filtro == "" %}selected{% endif %}>Todas</option>
+                <option value="concluidas" {% if filtro == "concluidas" %}selected{% endif %}>
+                    Concluídas
+                </option>
+                <option value="pendentes" {% if filtro == "pendentes" %}selected{% endif %}>
+                    Pendentes
+                </option>
+            </select>
+        </form>
+    </div>
     <ul class="flex flex-1 flex-col space-y-2 mt-2 overflow-y-auto">
+        {% if not tasks %}
+            <div class="w-full h-full flex justify-center mt-4 text-lg">
+                <strong class="text-semibold">Nenhuma tarefa encontrada</strong>
+            </div>
+        {% endif %}
         {% for t in tasks %}
             <li class="p-3 bg-blue-200 rounded-md {% if t.done %}bg-blue-200 text-gray-600{% endif %}">
                 <form action="{% url 'app:home' %}" method="post" class="flex justify-between items-center">

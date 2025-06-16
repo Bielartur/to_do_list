@@ -12,5 +12,10 @@ class CriarConta(FormView):
         form.save()
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        # 3) Quando o form NÃO for válido, re-renderiza o template
+        #    incluindo form.errors no contexto
+        return self.render_to_response(self.get_context_data(form=form))
+
     def get_success_url(self):
         return reverse('contas:login')

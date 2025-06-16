@@ -8,7 +8,7 @@
 {% block content_home %}
     <div class="flex items-center justify-between">
         <h1 class="text-3xl mb-1">Redefinir senha</h1>
-        <a href="{% url 'contas:editar_perfil' usuario.pk %}"
+        <a href="{% url 'contas:editar_perfil' user.pk %}"
            class="fa-solid fa-arrow-left text-base cursor-pointer bg-gray-900 text-gray-200 p-2 rounded-full"></a>
     </div>
     <form method="post" class="w-full">
