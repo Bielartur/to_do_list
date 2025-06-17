@@ -27,7 +27,7 @@
         </fieldset>
         <fieldset class="flex w-full h-20 gap-2 mt-3">
             <div class="w-1/2 rounded-lg bg-indigo-200 opacity-90 flex flex-col items-center justify-center">
-                <p class="text-xl font-semibold">{{ user.last_login|date:"d/m/Y" }}</p>
+                <p class="text-xl font-semibold">{{ user.date_joined|date:"d/m/Y" }}</p>
                 <p class="text-sm">Membro desde</p>
             </div>
             <div class="w-1/2 rounded-lg bg-indigo-200 opacity-90 flex flex-col items-center justify-center">
