@@ -12,7 +12,7 @@ Projeto de gerenciador de tarefas construído com [Django](https://www.djangopro
 
 ## Tecnologias utilizadas
 
-[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/) 
+[![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)](https://www.python.org/) 
 [![Django](https://img.shields.io/badge/Django-5.0-darkgreen?logo=django)](https://www.djangoproject.com/) 
 [![SQLite](https://img.shields.io/badge/SQLite-lightgrey?logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html) 
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-38B2AC?logo=tailwindcss)](https://tailwindcss.com/) 
