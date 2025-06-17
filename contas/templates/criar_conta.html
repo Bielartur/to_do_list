@@ -6,18 +6,34 @@
 {% endblock title %}
 
 {% block content_contas %}
-    <h1 class="text-3xl font-semibold">Cadastre-se!</h1>
+    <div class="flex items-center justify-between w-full">
+        <h1 class="text-3xl font-semibold">Cadastre-se!</h1>
+        <a href="{% url 'contas:login' %}"
+           class="fa-solid fa-arrow-left text-base cursor-pointer bg-gray-900 text-gray-200 p-2 rounded-full"></a>
+    </div>
     <form method="post" class="w-full">
         {% csrf_token %}
         <fieldset class="flex flex-col gap-4 text-center">
-            <legend class="text-14 leading-5 text-center mb-4">Cadastre-se e rapidamente otimize seu tempo e
-                suas ideias.
+            <legend class="text-14 leading-5 text-left mb-4">
+                Cadastre-se e rapidamente otimize seu tempo e suas ideias.
             </legend>
+
+            {# 2. Para cada campo, renderiza o input e logo abaixo mostra seus erros #}
             {% for campo in form %}
-                {% render_field campo class="p-2 rounded-lg border-1 border-gray-400 bg-white" placeholder=campo.label %}
+                <div class="flex flex-col">
+                    {% render_field campo class="p-2 rounded-lg border-1 border-gray-400 bg-white" placeholder=campo.label %}
+                    {% if campo.errors %}
+                        {% for erro in campo.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ erro }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             {% endfor %}
         </fieldset>
-        <button type="submit" class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold mb-2 cursor-pointer shadow-lg hover:shadow-indigo-500/50 trasition duration-400">Cadastrar</button>
+        <button type="submit"
+                class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold mb-2 cursor-pointer shadow-lg hover:shadow-indigo-500/50 trasition duration-400">
+            Cadastrar
+        </button>
         <div class="w-full flex justify-center text-lm gap-1">
             <label for="cadastrar-usuario">Já tem uma conta?</label>
             <a href="{% url 'contas:login' %}" id="cadastrar-usuario"

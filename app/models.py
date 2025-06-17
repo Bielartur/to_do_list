@@ -1,6 +1,6 @@
 from django.db import models
 
-from contas.models import Usuario
+from contas.models.usuario import Usuario
 
 # Create your models here.
 

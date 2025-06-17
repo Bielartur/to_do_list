@@ -22,7 +22,10 @@
                 {% endfor %}
             {% endfor %}
         </fieldset>
-        <button type="submit" class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold shadow-lg hover:shadow-indigo-500/50 trasition duration-400">Entrar</button>
+        <button type="submit"
+                class="w-full bg-yellow-400 mt-4 p-2 rounded-lg font-semibold shadow-lg hover:shadow-indigo-500/50 trasition duration-400">
+            Entrar
+        </button>
     </form>
     <div class="w-full">
         <div class="w-full flex justify-between text-lm">
@@ -34,8 +37,12 @@
             </a>
         </div>
         <div class="flex justify-center gap-3 mt-4">
-            <img src="{% static 'img/logo-google.png' %}" alt="Logo do Google" class="w-12">
-            <img src="{% static 'img/logo-github.png' %}" alt="Logo do Github" class="w-12">
+            <a href="">
+                <img src="{% static 'img/logo-google.png' %}" alt="Logo do Google" class="w-12">
+            </a>
+            <a href="">
+                <img src="{% static 'img/logo-github.png' %}" alt="Logo do Github" class="w-12">
+            </a>
         </div>
         <!-- <a href="">Esqueceu senha?</a> -->
     </div>
