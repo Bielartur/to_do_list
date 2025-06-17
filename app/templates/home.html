@@ -30,19 +30,33 @@
             </button>
         </div>
     </form>
-    <div class="flex items-center justify-between mt-3">
+    <div class="flex items-center justify-between mt-4">
         <h2>Concluidas: {{ concluidas }}/{{ total }}</h2>
-        <form action="{% url 'app:home' %}" method="get">
-            <i class="fa-solid fa-filter"></i>
-            <select name="filtro" onchange="this.form.submit()">
-                <option value="" {% if filtro == "" %}selected{% endif %}>Todas</option>
-                <option value="concluidas" {% if filtro == "concluidas" %}selected{% endif %}>
-                    Concluídas
-                </option>
-                <option value="pendentes" {% if filtro == "pendentes" %}selected{% endif %}>
-                    Pendentes
-                </option>
-            </select>
+        <form action="{% url 'app:home' %}" method="get" class="flex gap-2">
+            <div>
+                <i class="fa-solid fa-filter"></i>
+                <select name="filtro" onchange="this.form.submit()" class="text-sm bg-indigo-100 p-1 rounded-md focus:ring-2 focus:ring-purple-400">
+                    <option value="" {% if filtro == "" %}selected{% endif %}>Filtrar</option>
+                    <option value="concluidas" {% if filtro == "concluidas" %}selected{% endif %}>
+                        Concluídas
+                    </option>
+                    <option value="pendentes" {% if filtro == "pendentes" %}selected{% endif %}>
+                        Pendentes
+                    </option>
+                </select>
+            </div>
+            <div>
+                <i class="fa-solid fa-sort"></i>
+                <select name="ordem" onchange="this.form.submit()" class="text-sm bg-indigo-100 p-1 rounded-md focus:ring-2 focus:ring-purple-400">
+                    <option value="" {% if ordem == "" %}selected{% endif %}>Ordenar</option>
+                    <option value="concluidas" {% if ordem == "concluidas" %}selected{% endif %}>
+                        Concluídas
+                    </option>
+                    <option value="pendentes" {% if ordem == "pendentes" %}selected{% endif %}>
+                        Pendentes
+                    </option>
+                </select>
+            </div>
         </form>
     </div>
     <ul class="flex flex-1 flex-col space-y-2 mt-2 overflow-y-auto">
@@ -52,24 +66,50 @@
             </div>
         {% endif %}
         {% for t in tasks %}
-            <li class="p-3 bg-blue-200 rounded-md {% if t.done %}bg-blue-200 text-gray-600{% endif %}">
-                <form action="{% url 'app:home' %}" method="post" class="flex justify-between items-center">
+            <li>
+                <form
+                        action="{% url 'app:home' %}"
+                        method="post"
+                        class="rounded-2xl shadow-md shadow-purple-400/50 p-4 flex items-center justify-between {% if t.done %}bg-indigo-100{% else %}bg-white{% endif %} transition duration-400 hover:shadow-lg"
+                >
                     {% csrf_token %}
+
+                    {# 1. Botão de marcar/desmarcar com checkbox estilizado #}
                     <button
                             type="submit"
                             name="task-done"
                             value="{{ t.id }},{{ t.done }}"
-                            class="w-full flex align-start gap-2"
+                            class="flex-shrink-0 w-6 h-6 border-2 border-purple-500 {% if t.done %}bg-purple-500{% endif %} text-white rounded-md flex items-center justify-center cursor-pointer"
                     >
-                        <input type="checkbox" {% if t.done %}checked{% endif %}>
-                        <span class="{% if t.done %}line-through{% endif %} cursor-pointer text-start">{{ t.title }}</span>
+                        {% if t.done %}
+                            <i class="fas fa-check"></i>
+                        {% endif %}
                     </button>
+
+                    {# 2. Conteúdo do card: título e possível subtítulo #}
+                    <button type="submit"
+                            class="flex-1 mx-4 cursor-pointer text-left"
+                            name="task-done"
+                            value="{{ t.id }},{{ t.done }}"
+                    >
+                        <p class="text-lg font-semibold {% if t.done %}line-through text-gray-700{% else %}text-gray-900{% endif %}">
+                            {{ t.title }}
+                        </p>
+                        {# exemplo de subtítulo, com data ou prioridade #}
+                        {% if t.due_data %}
+                            <p class="text-sm text-gray-500">Prazo: {{ t.due_date }}</p>
+                        {% endif %}
+                    </button>
+
+                    {# 3. Botão de excluir #}
                     <button
                             type="submit"
                             name="task-delete"
-                            value='{{ t.id }}'
-                            class="fa-solid fa-trash-can cursor-pointer ml-2 text-gray-700"
-                    ></button>
+                            value="{{ t.id }}"
+                            class="text-gray-400 hover:text-gray-600 transition-opacity"
+                    >
+                        <i class="fas fa-trash-can"></i>
+                    </button>
                 </form>
             </li>
         {% endfor %}
