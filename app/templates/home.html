@@ -8,11 +8,11 @@
 {% block content_home %}
     <div class="flex items-center gap-4 w-full justify-between">
         <h1 class="text-3xl">Gerenciador de tarefas</h1>
-        <div class="flex gap-4">
-            <a href="{% url 'contas:editar_perfil' user.pk %}" class="fa fa-cog max-h-fit text-xl"></a>
+        <div class="flex gap-2">
+            <a href="{% url 'contas:editar_perfil' user.pk %}" class="fa fa-cog max-h-fit text-xl p-2"></a>
             <form action="{% url 'contas:logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit" class="fas fa-sign-out max-h-fit text-xl cursor-pointer"></button>
+                <button type="submit" class="fas fa-sign-out max-h-fit text-xl cursor-pointer p-2"></button>
             </form>
         </div>
     </div>
@@ -33,30 +33,38 @@
     <div class="flex items-center justify-between mt-4">
         <h2>Concluidas: {{ concluidas }}/{{ total }}</h2>
         <form action="{% url 'app:home' %}" method="get" class="flex gap-2">
-            <div>
+            <div class="flex items-center gap-2">
                 <i class="fa-solid fa-filter"></i>
-                <select name="filtro" onchange="this.form.submit()" class="text-sm bg-indigo-100 p-1 rounded-md focus:ring-2 focus:ring-purple-400">
-                    <option value="" {% if filtro == "" %}selected{% endif %}>Filtrar</option>
-                    <option value="concluidas" {% if filtro == "concluidas" %}selected{% endif %}>
-                        Concluídas
+                <select
+                        name="acao"
+                        onchange="this.form.submit()"
+                        class="text-sm bg-indigo-100 p-1 rounded-md focus:ring-2 focus:ring-purple-400"
+                >
+                    {# opção genérica (vai funcionar como “todas” se acao=="" no view) #}
+                    <option value="" {% if acao == "" %}selected{% endif %}>
+                        Filtrar / Ordenar
                     </option>
-                    <option value="pendentes" {% if filtro == "pendentes" %}selected{% endif %}>
-                        Pendentes
-                    </option>
+
+                    <optgroup label="Filtrar">
+                        <option value="concluidas" {% if acao == "concluidas" %}selected{% endif %}>
+                            Concluídas
+                        </option>
+                        <option value="pendentes" {% if acao == "pendentes" %}selected{% endif %}>
+                            Pendentes
+                        </option>
+                    </optgroup>
+
+                    <optgroup label="Ordenar">
+                        <option value="order_done_asc" {% if acao == "order_done_asc" %}selected{% endif %}>
+                            Pendentes primeiro
+                        </option>
+                        <option value="order_done_desc" {% if acao == "order_done_desc" %}selected{% endif %}>
+                            Concluídas primeiro
+                        </option>
+                    </optgroup>
                 </select>
             </div>
-            <div>
-                <i class="fa-solid fa-sort"></i>
-                <select name="ordem" onchange="this.form.submit()" class="text-sm bg-indigo-100 p-1 rounded-md focus:ring-2 focus:ring-purple-400">
-                    <option value="" {% if ordem == "" %}selected{% endif %}>Ordenar</option>
-                    <option value="concluidas" {% if ordem == "concluidas" %}selected{% endif %}>
-                        Concluídas
-                    </option>
-                    <option value="pendentes" {% if ordem == "pendentes" %}selected{% endif %}>
-                        Pendentes
-                    </option>
-                </select>
-            </div>
+
         </form>
     </div>
     <ul class="flex flex-1 flex-col space-y-2 mt-2 overflow-y-auto">

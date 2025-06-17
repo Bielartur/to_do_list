@@ -16,31 +16,27 @@ class Home(LoginRequiredMixin, FormMixin, ListView):
     def get_queryset(self):
         # Base: só as tasks do usuário
         qs = super().get_queryset().filter(user=self.request.user)
+        acao = self.request.GET.get('acao', '')
+
         filtros = {
             'concluidas': True,
             'pendentes': False,
         }
-        filtro = self.request.GET.get('filtro')
-        if filtro in filtros:
-            qs = qs.filter(done=filtros[filtro])
+        if acao in filtros:
+            qs = qs.filter(done=filtros[acao])
 
         ordens = {
-            'concluidas': 'done',
-            'pendentes': '-done',
+            'order_done_asc': 'done',
+            'order_done_desc': '-done',
         }
-        ordem = self.request.GET.get('ordem')
-        if ordem in ordens:
-            qs = qs.order_by(ordens[ordem])
+        if acao in ordens:
+            qs = qs.order_by(ordens[acao])
 
         return qs
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        # Instancia vazia do form para a área de criação
-        ctx['form'] = self.get_form()
-        # Para manter o select “selected” no template
-        ctx['filtro'] = self.request.GET.get('filtro', '')
-        ctx['ordem'] = self.request.GET.get('ordem', '')
+        ctx["acao"] = self.request.GET.get("acao", "")
         return ctx
 
     def post(self, request, *args, **kwargs):
